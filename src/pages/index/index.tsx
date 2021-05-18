@@ -1,28 +1,35 @@
 import * as React from 'react';
 import {View} from 'remax/one';
-import styles from './index.css';
+import './index.scss';
 import {useEffect} from "react";
+import {loadVideo, mobile, videoSize} from "@/utils";
+import dat from 'dat.gui';
+import PoseDetection from "@/poseDetection";
+import {initSketchGui, setupSketch} from "@/sketch";
 
 export default () => {
 
     useEffect(() => {
-        navigator.getUserMedia = navigator.getUserMedia || (navigator as any).webkitGetUserMedia || (navigator as any).mozGetUserMedia;
-        console.log(navigator);
+        const video = loadVideo();
 
-        const video: any = document.getElementById('video');
+        const gui = new dat.GUI({width: 250});
+        const detectionGui = gui.addFolder('detection');
+        const sketchGui = gui.addFolder('sketch');
 
-        const stream = navigator.mediaDevices.getUserMedia({
-            audio: false,
-            video: {
-                facingMode: 'user',
-            },
+        let poseDetection = new PoseDetection(video, mobile());
+        const { videoHeight, videoWidth } = videoSize();
+        poseDetection.initPoseDetection().then(() => {
+            setupSketch(poseDetection, video, videoWidth, videoHeight);
+            initSketchGui(sketchGui);
         });
+        poseDetection.initGui(detectionGui);
     })
 
     return (
-        <View className={styles.app}>
+        <View>
             <video id="video">
             </video>
+            <canvas id="output" />
         </View>
     );
 };
