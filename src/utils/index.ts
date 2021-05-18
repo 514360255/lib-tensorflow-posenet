@@ -1,4 +1,3 @@
-
 export const videoSize = () => {
     const videoWidth = window.innerWidth / 2.8;
     const videoHeight = window.innerWidth / 2.8;
@@ -29,11 +28,11 @@ export const setupCamera = async (id: string = 'video') => {
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
         throw new Error('此浏览器不支持getUserMedia');
     }
-    const video: any = document.getElementById(id);
-    const { videoWidth, videoHeight } = videoSize();
+    const video = await document.getElementById(id) as HTMLVideoElement;
+    const {videoWidth, videoHeight} = videoSize();
     video.width = videoWidth;
     video.height = videoHeight;
-    const stream = await navigator.mediaDevices.getUserMedia({
+    video.srcObject = await navigator.mediaDevices.getUserMedia({
         audio: false,
         video: {
             facingMode: 'user',
@@ -41,7 +40,6 @@ export const setupCamera = async (id: string = 'video') => {
             height: mobile() ? undefined : videoHeight,
         },
     });
-    video.srcObject = stream;
 
     return new Promise((resolve) => {
         video.onloadedmetadata = () => {
@@ -51,9 +49,9 @@ export const setupCamera = async (id: string = 'video') => {
 }
 
 export const loadVideo = async (id: string = 'video') => {
-    setUserMedia();
-    const video: any = await setupCamera(id);
-    video.play();
+    await setUserMedia();
+    const video = await setupCamera(id) as HTMLVideoElement;
+    await video.play();
 
     return video;
 }

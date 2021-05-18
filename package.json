@@ -2,14 +2,16 @@
   "name": "tensorflow-posenet",
   "private": true,
   "version": "1.0.0",
-  "description": "Remax Project With TypeScript",
+  "description": "tensorflow posenet",
   "main": "index.js",
   "keywords": [],
   "author": "sunshine <jiuling.guo@bizatmobile.com>",
   "license": "MIT",
   "scripts": {
     "dev": "remax build -w -t",
-    "build": "cross-env NODE_ENV=production remax build -t"
+    "build": "cross-env NODE_ENV=production remax build -t",
+    "wechat": "npm run dev wechat",
+    "web": "npm run dev web"
   },
   "dependencies": {
     "@remax/plugin-sass": "^1.0.0",

@@ -95,7 +95,9 @@ async function sketchLoop() {
 
     ctx.restore();
 
-    requestAnimationFrame(sketchLoop);
+    setTimeout(() => {
+        sketchLoop()
+    }, 16)
 }
 
 function toTuple({y, x}: any) {

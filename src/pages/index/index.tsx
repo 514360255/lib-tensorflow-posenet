@@ -9,26 +9,24 @@ import {initSketchGui, setupSketch} from "@/sketch";
 
 export default () => {
 
-    useEffect(() => {
-        const video = loadVideo();
-
-        const gui = new dat.GUI({width: 250});
-        const detectionGui = gui.addFolder('detection');
-        const sketchGui = gui.addFolder('sketch');
-
-        let poseDetection = new PoseDetection(video, mobile());
-        const { videoHeight, videoWidth } = videoSize();
-        poseDetection.initPoseDetection().then(() => {
-            setupSketch(poseDetection, video, videoWidth, videoHeight);
-            initSketchGui(sketchGui);
-        });
-        poseDetection.initGui(detectionGui);
+    loadVideo().then(video => {
+        // const gui = new dat.GUI({width: 250});
+        // const detectionGui = gui.addFolder('detection');
+        // const sketchGui = gui.addFolder('sketch');
+        //
+        // let poseDetection = new PoseDetection(video, mobile());
+        // const { videoHeight, videoWidth } = videoSize();
+        // poseDetection.initPoseDetection().then(() => {
+        //     setupSketch(poseDetection, video, videoWidth, videoHeight);
+        //     initSketchGui(sketchGui);
+        // });
+        // poseDetection.initGui(detectionGui);
     })
 
     return (
         <View>
-            <video id="video">
-            </video>
+            <View>1234567</View>
+            <video id="video" />
             <canvas id="output" />
         </View>
     );
